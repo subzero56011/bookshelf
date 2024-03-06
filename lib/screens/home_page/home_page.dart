@@ -1,10 +1,10 @@
 import 'package:ecommerce/components/book_model.dart';
+import 'package:ecommerce/components/buttom_sheet_builder.dart';
 import 'package:ecommerce/screens/home_page/cubit/cubit.dart';
 import 'package:ecommerce/screens/home_page/cubit/states.dart';
 import 'package:ecommerce/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc/bloc.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required this.title});
@@ -50,7 +50,7 @@ class MyHomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(36.0)),
                   splashColor: kPrimaryColor.withOpacity(0.4),
                   backgroundColor: kAccentColor,
-                  onPressed: () => cubit.showAddBookBottomSheet(context),
+                  onPressed: () => showAddBookModal(context, cubit.addBook),
                   tooltip: 'Increment',
                   child: Icon(
                     Icons.add,

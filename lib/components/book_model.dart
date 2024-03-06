@@ -22,6 +22,7 @@ class BookListItem extends StatelessWidget {
   final Function(Book) onDelete;
 
   const BookListItem({
+    super.key,
     required this.book,
     required this.onChanged,
     required this.onDelete,
@@ -38,8 +39,8 @@ class BookListItem extends StatelessWidget {
       background: Container(
         color: Colors.red, // Background color when swiping to delete
         alignment: Alignment.centerRight,
-        padding: EdgeInsets.only(right: 20.0),
-        child: Icon(
+        padding: const EdgeInsets.only(right: 20.0),
+        child: const Icon(
           Icons.delete,
           color: Colors.white,
         ),

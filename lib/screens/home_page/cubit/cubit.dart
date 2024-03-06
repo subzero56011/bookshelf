@@ -1,5 +1,4 @@
 import 'package:ecommerce/components/book_model.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce/screens/home_page/cubit/states.dart';
@@ -41,65 +40,14 @@ class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
     }
   }
 
-  void addNewBook(Book newBook) {
+  void addBook(String name, String author, String description) {
+    final newBook = Book(
+      id: '${books.length + 1}',
+      name: name,
+      author: author,
+      description: description,
+    );
     books.add(newBook);
     emit(HomePageScreenBookAddedState());
-  }
-
-  void showAddBookBottomSheet(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    String? name;
-    String? author;
-    String? description;
-
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return Container(
-          padding: EdgeInsets.all(20),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Book Name'),
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter a book name' : null,
-                  onSaved: (value) => name = value,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Author'),
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter an Author name' : null,
-                  onSaved: (value) => author = value,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Description'),
-                  onSaved: (value) => description = value,
-                ),
-                ElevatedButton(
-                  child: Text('Add Book'),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-                      final newBook = Book(
-                        id: '${books.length + 1}',
-                        name: name!,
-                        author: author!,
-                        description: description ??
-                            '', // Default to empty string if null
-                      );
-                      HomePageScreenCubit.get(context).addNewBook(newBook);
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 }
