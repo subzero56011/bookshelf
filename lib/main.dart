@@ -1,9 +1,12 @@
+import 'package:ecommerce/shared/network/local/chache_helper.dart';
 import 'package:ecommerce/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/home_page/home_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper.init();
   runApp(const MyApp());
 }
 

@@ -14,7 +14,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => HomePageScreenCubit(),
+      create: (BuildContext context) => HomePageScreenCubit()..loadBooks(),
       child: BlocConsumer<HomePageScreenCubit, HomePageScreenStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -37,6 +37,7 @@ class MyHomePage extends StatelessWidget {
                   book: book,
                   onChanged: cubit.handleCheckboxChanged,
                   onDelete: cubit.deleteBook,
+                  onEdit: cubit.updateBook,
                 );
               },
             ),
