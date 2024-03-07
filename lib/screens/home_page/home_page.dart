@@ -1,3 +1,4 @@
+import 'package:ecommerce/components/book_item_builder.dart';
 import 'package:ecommerce/components/book_model.dart';
 import 'package:ecommerce/components/buttom_sheet_builder.dart';
 import 'package:ecommerce/screens/home_page/cubit/cubit.dart';
@@ -13,8 +14,9 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (BuildContext context) => HomePageScreenCubit()..loadBooks(),
+      create: (BuildContext context) => HomePageScreenCubit()..init(),
       child: BlocConsumer<HomePageScreenCubit, HomePageScreenStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -25,7 +27,10 @@ class MyHomePage extends StatelessWidget {
               backgroundColor: kSecondaryColor,
               title: Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontSize: screenSize.width *
+                          0.065, // Adjust font size based on screen width
+                    ),
               ),
               centerTitle: true,
             ),
@@ -38,14 +43,15 @@ class MyHomePage extends StatelessWidget {
                   onChanged: cubit.handleCheckboxChanged,
                   onDelete: cubit.deleteBook,
                   onEdit: (Book book) {
-                    showEditBookModal(context, book, cubit.updateBook);
+                    showBookModal(context,
+                        book: book, updateBook: cubit.updateBook);
                   },
                 );
               },
             ),
             floatingActionButton: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.22,
-              height: MediaQuery.of(context).size.width * 0.22,
+              width: screenSize.width * 0.22,
+              height: screenSize.width * 0.22,
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: FloatingActionButton(
@@ -54,12 +60,12 @@ class MyHomePage extends StatelessWidget {
                   splashColor: kPrimaryColor.withOpacity(0.4),
                   backgroundColor: kAccentColor,
                   onPressed: () {
-                    showAddBookModal(context, cubit.addBook);
+                    showBookModal(context, addBook: cubit.addBook);
                   },
                   tooltip: 'Increment',
                   child: Icon(
                     Icons.add,
-                    size: MediaQuery.of(context).size.width * 0.07,
+                    size: screenSize.width * 0.07,
                     color: kPrimaryColor,
                   ),
                 ),
