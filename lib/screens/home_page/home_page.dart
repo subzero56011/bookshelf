@@ -37,7 +37,9 @@ class MyHomePage extends StatelessWidget {
                   book: book,
                   onChanged: cubit.handleCheckboxChanged,
                   onDelete: cubit.deleteBook,
-                  onEdit: cubit.updateBook,
+                  onEdit: (Book book) {
+                    showEditBookModal(context, book, cubit.updateBook);
+                  },
                 );
               },
             ),
@@ -51,7 +53,9 @@ class MyHomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(36.0)),
                   splashColor: kPrimaryColor.withOpacity(0.4),
                   backgroundColor: kAccentColor,
-                  onPressed: () => showAddBookModal(context, cubit.addBook),
+                  onPressed: () {
+                    showAddBookModal(context, cubit.addBook);
+                  },
                   tooltip: 'Increment',
                   child: Icon(
                     Icons.add,

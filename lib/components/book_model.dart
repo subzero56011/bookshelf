@@ -44,7 +44,7 @@ class BookListItem extends StatelessWidget {
   final Book book;
   final Function(bool?, Book) onChanged;
   final Function(Book) onDelete;
-  final Function(Book) onEdit; // Add an onEdit callback
+  final onEdit; // Add an onEdit callback
 
   const BookListItem({
     super.key,
@@ -74,12 +74,29 @@ class BookListItem extends StatelessWidget {
       child: ListTile(
         title: Text(book.name),
         subtitle: Text(book.author),
-        trailing: Checkbox(
-          value: book.isRead,
-          onChanged: (bool? value) {
-            // Call the onChanged method passed from the parent widget
-            onChanged(value, book);
-          },
+        leading: Image.asset(
+          'assets/images/book.png',
+          width: MediaQuery.of(context).size.width * 0.22,
+          height: MediaQuery.of(context).size.width * 0.22,
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                // Call the onEdit callback with the book
+                onEdit(book);
+              },
+            ),
+            Checkbox(
+              value: book.isRead,
+              onChanged: (bool? value) {
+                // Call the onChanged method passed from the parent widget
+                onChanged(value, book);
+              },
+            ),
+          ],
         ),
         // Add Edit actions later
       ),
