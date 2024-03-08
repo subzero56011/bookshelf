@@ -35,7 +35,7 @@ class BookListItem extends StatelessWidget {
           ),
           elevation: 5,
           child: Container(
-            height: 120, // Set a fixed height for the card
+            height: 120,
             padding: const EdgeInsets.all(8.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,8 +46,7 @@ class BookListItem extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4.0),
                     image: const DecorationImage(
-                      image: AssetImage(
-                          'assets/images/images.jpeg'), // Path to your image
+                      image: AssetImage('assets/images/images.jpeg'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -87,8 +86,7 @@ class BookListItem extends StatelessWidget {
                                     .titleLarge
                                     ?.copyWith(
                                       color: kPrimaryColor.withOpacity(0.6),
-                                      fontSize: screenSize.width *
-                                          0.029, // Adjust font size based on screen width
+                                      fontSize: screenSize.width * 0.029,
                                     ),
                               ),
                             ),
