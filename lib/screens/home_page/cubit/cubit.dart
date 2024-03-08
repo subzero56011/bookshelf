@@ -3,8 +3,8 @@ import 'dart:math';
 
 import 'package:ecommerce/components/book_model.dart';
 import 'package:ecommerce/shared/network/local/chache_helper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc/bloc.dart';
 import 'package:ecommerce/screens/home_page/cubit/states.dart';
 
 class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
@@ -99,7 +99,9 @@ class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
       author: author,
       description: description,
     );
-    print(newBook.id);
+    if (kDebugMode) {
+      print(newBook.id);
+    }
     books.add(newBook);
     await saveBooks();
     emit(HomePageScreenBookAddedState());
@@ -107,7 +109,9 @@ class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
 
   Future<void> deleteBook(Book deletedBook) async {
     books.removeWhere((book) => book.id == deletedBook.id);
-    print(deletedBook.id);
+    if (kDebugMode) {
+      print(deletedBook.id);
+    }
     await saveBooks();
     emit(HomePageScreenBookDeletedState());
   }

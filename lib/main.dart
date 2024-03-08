@@ -1,7 +1,6 @@
 import 'package:ecommerce/shared/network/local/chache_helper.dart';
 import 'package:ecommerce/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
-
 import 'screens/home_page/home_page.dart';
 
 void main() async {
@@ -20,13 +19,7 @@ class MyApp extends StatelessWidget {
         title: 'bookshelf',
         home: const MyHomePage(title: 'Book Shelf'),
         theme: ThemeData(
-          // Color scheme setup
-
-          // Applying custom font family across the entire app
-
           fontFamily: 'Lato-Bold',
-
-          // Define the default `TextTheme`
           textTheme: const TextTheme(
             titleLarge: TextStyle(
                 fontSize: 30.0,

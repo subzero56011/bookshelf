@@ -29,8 +29,7 @@ class MyHomePage extends StatelessWidget {
               title: Text(
                 title,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: screenSize.width *
-                          0.055, // Adjust font size based on screen width
+                      fontSize: screenSize.width * 0.055,
                     ),
               ),
               centerTitle: true,

@@ -128,11 +128,13 @@ import 'package:flutter/material.dart';
 //   );
 // }
 
-void showBookModal(BuildContext context,
-    {Book? book,
-    Function(Book)? updateBook,
-    Function(String, String, String)? addBook}) {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+void showBookModal(
+  BuildContext context, {
+  Book? book,
+  Function(Book)? updateBook,
+  Function(String, String, String)? addBook,
+}) {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String? name = book?.name;
   String? author = book?.author;
   String? description = book?.description;
@@ -144,27 +146,27 @@ void showBookModal(BuildContext context,
 
       return AlertDialog(
         content: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 if (book != null) ...[
                   TextFormField(
                     initialValue: name,
-                    decoration: InputDecoration(labelText: 'Book Name'),
+                    decoration: const InputDecoration(labelText: 'Book Name'),
                     onSaved: (value) => name = value,
                   ),
                   TextFormField(
                     enabled: false,
                     initialValue: author,
-                    decoration: InputDecoration(labelText: 'Author'),
+                    decoration: const InputDecoration(labelText: 'Author'),
                     onSaved: (value) => author = value,
                   ),
                   TextFormField(
                     initialValue: description,
-                    decoration: InputDecoration(labelText: 'Description'),
+                    decoration: const InputDecoration(labelText: 'Description'),
                     onSaved: (value) => description = value,
                   ),
                 ] else ...[
@@ -196,13 +198,12 @@ void showBookModal(BuildContext context,
                 book != null ? 'Update Book' : 'Add Book',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: kPrimaryColor,
-                      fontSize: screenSize.width *
-                          0.033, // Adjust font size based on screen width
+                      fontSize: screenSize.width * 0.033,
                     ),
               ),
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
+                if (formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
                   if (book != null) {
                     // Update an existing book
                     Book updatedBook = Book(
