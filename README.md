@@ -14,7 +14,13 @@ The BookShelf app allows users to maintain a personal library, tracking books th
 
 ![Screenshot 1](assets/screenshots/screenshot.png)
 
-### Prerequisites
+## Download
+
+You can download the latest version of the app :
+
+https://drive.google.com/file/d/14TWYr_HRVoR5-mlGAyIQ7K6mJaoP2JwU/view?usp=sharing
+
+### Prerequisites to run
 
 - Flutter installed on your machine
 - An IDE (e.g., Android Studio, VSCode, etc.)
