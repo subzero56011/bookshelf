@@ -1,4 +1,5 @@
 import 'package:ecommerce/components/book_model.dart';
+import 'package:ecommerce/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 // void showAddBookModal(BuildContext context, Function addBook) {
@@ -139,6 +140,8 @@ void showBookModal(BuildContext context,
   showDialog(
     context: context,
     builder: (BuildContext bc) {
+      final screenSize = MediaQuery.of(context).size;
+
       return AlertDialog(
         content: Container(
           padding: EdgeInsets.all(20),
@@ -189,7 +192,14 @@ void showBookModal(BuildContext context,
         actions: <Widget>[
           Center(
             child: ElevatedButton(
-              child: Text(book != null ? 'Update Book' : 'Add Book'),
+              child: Text(
+                book != null ? 'Update Book' : 'Add Book',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: kPrimaryColor,
+                      fontSize: screenSize.width *
+                          0.033, // Adjust font size based on screen width
+                    ),
+              ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();

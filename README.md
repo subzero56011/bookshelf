@@ -14,6 +14,12 @@ The BookShelf app allows users to maintain a personal library, tracking books th
 
 ![Screenshot 1](assets/screenshots/screenshot.png)
 
+### Prerequisites
+
+- Flutter installed on your machine
+- An IDE (e.g., Android Studio, VSCode, etc.)
+- An emulator or physical device to run the app
+
 ## Getting Started
 
 To get started with BookShelf, follow these steps:
@@ -30,11 +36,13 @@ To get started with BookShelf, follow these steps:
 
 flutter pub get
 
-
 4. Run the app:
 
   flutter run
 
+5. Running Tests:
+
+flutter test
 
 ## Dependencies
 

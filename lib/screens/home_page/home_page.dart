@@ -24,12 +24,13 @@ class MyHomePage extends StatelessWidget {
           return Scaffold(
             backgroundColor: kSecondaryColor,
             appBar: AppBar(
-              backgroundColor: kSecondaryColor,
+              elevation: 5,
+              backgroundColor: kPrimaryColor,
               title: Text(
                 title,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontSize: screenSize.width *
-                          0.065, // Adjust font size based on screen width
+                          0.055, // Adjust font size based on screen width
                     ),
               ),
               centerTitle: true,

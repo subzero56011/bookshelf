@@ -18,13 +18,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'bookshelf',
-        home: const MyHomePage(title: 'BookShelf'),
+        home: const MyHomePage(title: 'Book Shelf'),
         theme: ThemeData(
           // Color scheme setup
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: kPrimaryColor,
-            secondary: kSecondaryColor,
-          ),
 
           // Applying custom font family across the entire app
 
@@ -34,7 +30,7 @@ class MyApp extends StatelessWidget {
           textTheme: const TextTheme(
             titleLarge: TextStyle(
                 fontSize: 30.0,
-                color: kPrimaryColor,
+                color: kSecondaryColor,
                 fontFamily: 'Lato-Bold'), // For large display text
             titleMedium: TextStyle(
                 fontSize: 20.0,
