@@ -75,10 +75,10 @@ class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
     emit(HomePageScreenBooksLoadedState());
   }
 
-  void saveBooks() {
+  Future<void> saveBooks() async {
     List<String> booksJson =
         books.map((book) => json.encode(book.toJson())).toList();
-    CacheHelper.setStringList(key: 'books', value: booksJson);
+    await CacheHelper.setStringList(key: 'books', value: booksJson);
   }
 
   static HomePageScreenCubit get(context) => BlocProvider.of(context);
@@ -92,7 +92,7 @@ class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
     emit(HomePageScreenCheckboxChangedState());
   }
 
-  void addBook(String name, String author, String description) {
+  Future<void> addBook(String name, String author, String description) async {
     final newBook = Book(
       id: generateId(),
       name: name,
@@ -101,14 +101,14 @@ class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
     );
     print(newBook.id);
     books.add(newBook);
-    saveBooks();
+    await saveBooks();
     emit(HomePageScreenBookAddedState());
   }
 
-  void deleteBook(Book deletedBook) {
+  Future<void> deleteBook(Book deletedBook) async {
     books.removeWhere((book) => book.id == deletedBook.id);
     print(deletedBook.id);
-    saveBooks();
+    await saveBooks();
     emit(HomePageScreenBookDeletedState());
   }
 
@@ -119,11 +119,11 @@ class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
         rng.nextInt(999999).toString();
   }
 
-  void updateBook(Book updatedBook) {
+  Future<void> updateBook(Book updatedBook) async {
     int index = books.indexWhere((book) => book.id == updatedBook.id);
     if (index != -1) {
       books[index] = updatedBook;
-      saveBooks();
+      await saveBooks();
       emit(HomePageScreenBookEditedState());
     }
   }

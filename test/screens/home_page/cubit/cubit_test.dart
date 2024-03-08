@@ -1,27 +1,12 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:ecommerce/components/book_model.dart';
 import 'package:ecommerce/shared/network/local/chache_helper.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce/screens/home_page/cubit/states.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ecommerce/screens/home_page/cubit/cubit.dart';
-import 'package:ecommerce/components/book_model.dart';
-// Import Flutter test package
-import 'package:flutter_test/flutter_test.dart';
-// Import bloc_test package for easier testing of Bloc and Cubit
-import 'package:bloc_test/bloc_test.dart';
-// Import your HomePageScreenCubit and its states
-import 'package:ecommerce/screens/home_page/cubit/cubit.dart';
-import 'package:ecommerce/screens/home_page/cubit/states.dart';
-// Import mockito or any other mocking package if necessary
-import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-// Mock dependencies if necessary. For example, if you need to mock CacheHelper:
 
 class MockCacheHelper extends CacheHelper {
   static bool mockSetStringList = true;
@@ -44,8 +29,7 @@ class MockCacheHelper extends CacheHelper {
 void main() {
   setUpAll(() async {
     SharedPreferences.setMockInitialValues({});
-    await CacheHelper
-        .init(); // This initializes CacheHelper with the mocked SharedPreferences
+    await CacheHelper.init();
   });
 
   late HomePageScreenCubit cubit;
@@ -54,23 +38,58 @@ void main() {
   setUpAll(() {
     mockCacheHelper = MockCacheHelper();
     SharedPreferences.setMockInitialValues({});
-    // Assuming CacheHelper is properly mocked to simulate shared preferences behavior
     cubit = HomePageScreenCubit(cacheHelper: mockCacheHelper);
   });
+  test('addBook adds a book to the books list', () async {
+    expect(cubit.books.isEmpty, isTrue);
 
-  blocTest<HomePageScreenCubit, HomePageScreenStates>(
-    'adds a book and emits [HomePageScreenBookAddedState]',
-    build: () => cubit,
-    act: (cubit) =>
-        cubit.addBook("Test Book", "Test Author", "Test Description"),
-    expect: () => [
-      isA<HomePageScreenBookAddedState>()
-    ], // Updated to match the expected state
-    verify: (_) {
-      expect(cubit.books.isNotEmpty, isTrue);
-      expect(cubit.books.any((book) => book.name == "Test Book"), isTrue);
-    },
-  );
+    await cubit.addBook("Test Book", "Test Author", "Test Description");
+
+    expect(cubit.books.isNotEmpty, isTrue);
+    expect(cubit.books.any((book) => book.name == "Test Book"), isTrue);
+  });
+
+  test('deleteBook removes a book from the books list', () async {
+    await cubit.addBook("Book to Delete", "Author", "Description");
+    var bookToDelete =
+        cubit.books.firstWhere((book) => book.name == "Book to Delete");
+
+    //book was added
+    expect(cubit.books.any((book) => book.name == "Book to Delete"), isTrue);
+
+    //delete the book
+    await cubit.deleteBook(bookToDelete);
+
+    //the book was removed
+    expect(cubit.books.any((book) => book.name == "Book to Delete"), isFalse);
+  });
+
+  test('updateBook updates a book details in the books list', () async {
+    //Add book
+    await cubit.addBook(
+        "Book to Update", "Original Author", "Original Description");
+    var bookToUpdate =
+        cubit.books.firstWhere((book) => book.name == "Book to Update");
+
+    //Update book
+    var updatedBook = Book(
+      id: bookToUpdate.id,
+      name: "Updated Book Name",
+      author: "Updated Author",
+      description: "Updated Description",
+      isRead: bookToUpdate.isRead,
+    );
+
+    await cubit.updateBook(updatedBook);
+
+    //Verify updated
+    expect(
+        cubit.books.any((book) =>
+            book.name == "Updated Book Name" &&
+            book.author == "Updated Author" &&
+            book.description == "Updated Description"),
+        isTrue);
+  });
 }
 
 class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
@@ -144,24 +163,24 @@ class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
     emit(HomePageScreenBooksLoadedState());
   }
 
-  void saveBooks() {
+  Future<void> saveBooks() async {
     List<String> booksJson =
         books.map((book) => json.encode(book.toJson())).toList();
-    CacheHelper.setStringList(key: 'books', value: booksJson);
+    await CacheHelper.setStringList(key: 'books', value: booksJson);
   }
 
   static HomePageScreenCubit get(context) => BlocProvider.of(context);
 
   List<Book> books = [];
 
-  void handleCheckboxChanged(bool? value, Book book) {
+  Future<void> handleCheckboxChanged(bool? value, Book book) async {
     book.isRead = value!;
 
-    saveBooks();
+    await saveBooks();
     emit(HomePageScreenCheckboxChangedState());
   }
 
-  void addBook(String name, String author, String description) {
+  Future<void> addBook(String name, String author, String description) async {
     final newBook = Book(
       id: generateId(),
       name: name,
@@ -170,14 +189,14 @@ class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
     );
     print(newBook.id);
     books.add(newBook);
-    saveBooks();
+    await saveBooks();
     emit(HomePageScreenBookAddedState());
   }
 
-  void deleteBook(Book deletedBook) {
+  Future<void> deleteBook(Book deletedBook) async {
     books.removeWhere((book) => book.id == deletedBook.id);
     print(deletedBook.id);
-    saveBooks();
+    await saveBooks();
     emit(HomePageScreenBookDeletedState());
   }
 
@@ -188,11 +207,11 @@ class HomePageScreenCubit extends Cubit<HomePageScreenStates> {
         rng.nextInt(999999).toString();
   }
 
-  void updateBook(Book updatedBook) {
+  Future<void> updateBook(Book updatedBook) async {
     int index = books.indexWhere((book) => book.id == updatedBook.id);
     if (index != -1) {
       books[index] = updatedBook;
-      saveBooks();
+      await saveBooks();
       emit(HomePageScreenBookEditedState());
     }
   }

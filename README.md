@@ -1,22 +1,56 @@
-<<<<<<< HEAD
-# bookshelf
-Organize your reading life!  Add books, track progress (read/unread), and manage your library with ease. Simple, clean, and user-friendly.
-||||||| (empty tree)
-=======
-# ecommerce
+# BookShelf App
 
-E-commerce take 2
+The BookShelf app allows users to maintain a personal library, tracking books they've read or want to read. It features a simple, user-friendly interface built with Flutter, supporting basic CRUD operations on books.
+
+## Features
+
+- Add books: Users can add new books to their collection by providing book details such as title, author, and description.
+- Edit books: Users can edit existing books to update their details.
+- Delete books: Users can remove books from their collection.
+- Mark as read/unread: Users can mark books as read or unread to keep track of their reading progress.
+- View book details: Users can view detailed information about each book, including title, author, and description.
+
+## Screenshots
+
+![Screenshot 1](assets/screenshots/screenshot.png)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To get started with BookShelf, follow these steps:
 
-A few resources to get you started if this is your first Flutter project:
+1. Clone this repository:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+  git clone https://github.com/subzero56011/bookshelf
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
->>>>>>> d0bbf6d... Initial commit
+2. Navigate to the project directory:
+
+  cd bookshelf
+
+3. Install dependencies:
+
+flutter pub get
+
+
+4. Run the app:
+
+  flutter run
+
+
+## Dependencies
+
+- `flutter_bloc`: State management library for Flutter applications.
+- `shared_preferences`: Plugin for persisting key-value data on the device.
+- `mockito`: Mocking library for Dart to mock dependencies in tests.
+
+## Usage
+
+  To use BookShelf, simply open the app and start managing your book collection. You can add new books, edit existing ones, mark them as read or unread, and delete them by swiping as needed.
+
+## Contributing
+
+  Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
+
+
+
+
+
